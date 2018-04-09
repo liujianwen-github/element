@@ -210,13 +210,43 @@
         this.$emit('input', currentValue);
         this.$emit('change', currentValue, 'right', this.leftChecked);
       },
-
       clearQuery(which) {
         if (which === 'left') {
           this.$refs.leftPanel.query = '';
         } else if (which === 'right') {
           this.$refs.rightPanel.query = '';
         }
+      },
+      toUp(){
+        let currentValue = this.value.slice();
+        let index = currentValue.indexOf(this.rightChecked[0])
+        currentValue = this.upRecord(currentValue, index)
+        this.$emit('input', currentValue)
+        this.$emit('change', currentValue, 'right')
+        console.log(this.value)
+      },
+      toDown(){
+        let currentValue = this.value.slice();
+        let index = currentValue.indexOf(this.rightChecked[0])
+        currentValue = this.upRecord(currentValue, index)
+        this.$emit('input', currentValue)
+        this.$emit('change', currentValue, 'right')
+      },
+      swapItems(arr,index1,index2){
+        arr[index1] = arr.splice(index2, 1, arr[index1])[0]
+        return arr
+      },
+      upRecord(arr,$index){
+        if($index===0){
+          return arr
+        }
+        return this.swapItems(arr,$index,$index-1)
+      },
+      downRecord(){
+        if($index === arr.length -1){
+          return arr
+        }
+        return this.swapItems(arr,$index,$index+1)
       }
     }
   };
