@@ -233,7 +233,7 @@ export default {
     toDown () {
       let currentValue = this.value.slice();
       let index = currentValue.indexOf(this.rightChecked[0])
-      currentValue = this.upRecord(currentValue, index)
+      currentValue = this.downRecord(currentValue, index)
       this.$emit('input', currentValue)
       this.$emit('change', currentValue, 'right')
     },
@@ -243,7 +243,7 @@ export default {
       let index = currentValue.indexOf(this.rightChecked[0])
       let tmp = currentValue[index]
       currentValue.splice(index,1)
-      currentValue.unShift(tmp)
+      currentValue.unshift(tmp)
       // currentValue = this.upRecord(currentValue, index)
       this.$emit('input', currentValue)
       this.$emit('change', currentValue, 'right')
