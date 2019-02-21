@@ -225,6 +225,75 @@
         } else if (which === 'right') {
           this.$refs.rightPanel.query = '';
         }
+      },
+      /**
+       * @description 右侧选中元素上下移动操作
+       */
+      // 上移
+      toUp: function toUp() {
+        var currentValue = this.value.slice();
+        var index = currentValue.indexOf(this.rightChecked[0]);
+        currentValue = this.upRecord(currentValue, index);
+        this.$emit('input', currentValue);
+        this.$emit('change', currentValue, 'right');
+        console.log(this.value);
+      },
+
+      // 下移
+      toDown: function toDown() {
+        var currentValue = this.value.slice();
+        var index = currentValue.indexOf(this.rightChecked[0]);
+        currentValue = this.downRecord(currentValue, index);
+        this.$emit('input', currentValue);
+        this.$emit('change', currentValue, 'right');
+      },
+
+      // 移动到最顶部
+      toTop: function toTop() {
+        var currentValue = this.value.slice();
+        var index = currentValue.indexOf(this.rightChecked[0]);
+        var tmp = currentValue[index];
+        currentValue.splice(index, 1);
+        currentValue.unshift(tmp);
+        // currentValue = this.upRecord(currentValue, index)
+        this.$emit('input', currentValue);
+        this.$emit('change', currentValue, 'right');
+      },
+
+      // 移动到最底部
+      toBottom: function toBottom() {
+        var currentValue = this.value.slice();
+        var index = currentValue.indexOf(this.rightChecked[0]);
+        var tmp = currentValue[index];
+        currentValue.splice(index, 1);
+        currentValue.push(tmp);
+        // currentValue = this.upRecord(currentValue, index)
+        this.$emit('input', currentValue);
+        this.$emit('change', currentValue, 'right');
+      },
+
+      /**
+       * @description 数组元素替换
+       * @param {Array} arr 当前被选中数组
+       * @param {Number} index1 被移动元素当前索引
+       * @param {Number} index2 与当前索引元素交换位置元素的索引
+       * @author 刘建文
+       */
+      swapItems: function swapItems(arr, index1, index2) {
+        arr[index1] = arr.splice(index2, 1, arr[index1])[0];
+        return arr;
+      },
+      upRecord: function upRecord(arr, $index) {
+        if ($index === 0) {
+          return arr;
+        }
+        return this.swapItems(arr, $index, $index - 1);
+      },
+      downRecord: function downRecord(arr, $index) {
+        if ($index === arr.length - 1) {
+          return arr;
+        }
+        return this.swapItems(arr, $index, $index + 1);
       }
     }
   };
